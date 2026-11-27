@@ -1,0 +1,5 @@
+.git
+.idea
+target
+logs
+src/main/resources/application-local.yaml
