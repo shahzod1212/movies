@@ -188,7 +188,7 @@ const SuccessPage = () => {
             <p className="mt-2 text-sm text-stone-400">{errorMsg}</p>
             <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row">
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/home")}
                 className="flex flex-1 items-center justify-center gap-2 rounded-full bg-white/10 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-colors hover:bg-white/20"
               >
                 <Home className="h-4 w-4" />

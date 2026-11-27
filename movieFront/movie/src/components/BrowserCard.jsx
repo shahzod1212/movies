@@ -1,13 +1,12 @@
 import React from "react";
 import { Star } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function BrowseCard({ movie }) {
-  const navigate = useNavigate();
   return (
-    <div
-      onClick={() => navigate(`/movie/${movie.id}`)}
-      className="group cursor-pointer"
+    <Link
+      to={`/movie/${movie.id}`}
+      className="group block cursor-pointer"
     >
       <div className="relative aspect-[2/3] overflow-hidden rounded-lg ring-1 ring-white/10">
         <img
@@ -30,6 +29,6 @@ export default function BrowseCard({ movie }) {
       <p className="text-[10.5px] text-stone-400">
         {movie.genre} · {movie.durationTime}
       </p>
-    </div>
+    </Link>
   );
 }

@@ -9,7 +9,7 @@ import { fetchAllMovies } from "../redux/movieSlice";
 import { fetchAllRoomsStore } from "../redux/roomSlice";
 import { fetchAllShowtime } from "../redux/showtimeSlice";
 import Footer from "../components/Footer";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const [heroIndex, setHeroIndex] = useState(0);
@@ -22,6 +22,10 @@ export default function HomePage() {
   const showtimes = useSelector((state) => state.showtime.showtimes);
   const featured = useMemo(() => movies.slice(0, 4), [movies]);
   const previewMovies = useMemo(() => movies.slice(0, 5), [movies]);
+  const hero = featured[heroIndex];
+  const heroShowtime = showtimes.find(
+    (showtime) => showtime.movie?.id === hero?.id,
+  );
 
   useEffect(() => {
     if (!token) return;
@@ -52,8 +56,6 @@ export default function HomePage() {
     }, 5500);
     return () => clearInterval(interval);
   }, [featured.length]);
-
-  const hero = featured[heroIndex];
 
   return (
     <div
@@ -120,7 +122,16 @@ export default function HomePage() {
             </p>
 
             <div className="mt-6 flex items-center gap-3">
-              <button className="flex items-center gap-2 rounded-lg bg-red-900 px-6 py-3 text-sm font-extrabold tracking-wide text-stone-50 shadow-lg shadow-red-950/60 transition-all hover:-translate-y-0.5 hover:bg-red-800">
+              <button
+                onClick={() =>
+                  navigate(
+                    heroShowtime
+                      ? `/showtime/${heroShowtime.id}`
+                      : "/showtimes",
+                  )
+                }
+                className="flex items-center gap-2 rounded-lg bg-red-900 px-6 py-3 text-sm font-extrabold tracking-wide text-stone-50 shadow-lg shadow-red-950/60 transition-all hover:-translate-y-0.5 hover:bg-red-800"
+              >
                 <Ticket className="h-4 w-4" />
                 Book tickets
               </button>
@@ -148,16 +159,12 @@ export default function HomePage() {
           <h2 className="font-display text-2xl tracking-wide text-stone-100">
             Now Showing
           </h2>
-          <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/showtimes");
-            }}
+          <Link
+            to="/showtimes"
             className="text-xs font-bold uppercase tracking-wider text-amber-400 hover:text-amber-300"
           >
             See all →
-          </a>
+          </Link>
         </div>
         <div className="no-scrollbar flex gap-4 overflow-x-auto pb-2">
           {showtimes.map((showtime) => (

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { User, Mail, Lock, Eye, EyeOff, Clapperboard } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { fetchRegisterUser } from "../redux/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 // Replace these with your real poster image URLs — { src, title } per tile.
@@ -128,7 +128,9 @@ export default function SignUp() {
     return () => clearInterval(interval);
   }, [posters.length]);
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
+    e.preventDefault();
+
     if (username && email && password) {
       try {
         await dispatch(
@@ -216,10 +218,7 @@ export default function SignUp() {
           Create an account to book seats and skip the line at the box office.
         </p>
 
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col gap-2.5"
-        >
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5">
           <div className="flex flex-col gap-1">
             <label
               htmlFor="username"
@@ -291,7 +290,7 @@ export default function SignUp() {
           </div>
 
           <button
-            onClick={handleSubmit}
+            type="submit"
             className="mt-1.5 w-full rounded-lg bg-red-900 py-2.5 text-sm font-extrabold tracking-wide text-stone-50 shadow-lg shadow-red-950/60 transition-all hover:-translate-y-0.5 hover:bg-red-800 active:translate-y-0 active:bg-red-950"
           >
             Create account
@@ -300,9 +299,12 @@ export default function SignUp() {
 
         <p className="mt-3 text-center text-xs text-stone-400">
           Already have a seat?{" "}
-          <a href="#" className="font-bold text-amber-400 hover:text-amber-300">
+          <Link
+            to="/login"
+            className="font-bold text-amber-400 hover:text-amber-300"
+          >
             Sign in
-          </a>
+          </Link>
         </p>
       </div>
     </div>

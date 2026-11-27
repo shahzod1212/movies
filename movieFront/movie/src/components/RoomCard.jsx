@@ -1,6 +1,6 @@
 import React from "react";
 import { Clapperboard, Users, Volume2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ACCENT_BY_TYPE = {
   IMAX: "from-red-900 to-red-950",
@@ -27,11 +27,11 @@ function lowestPrice(room) {
 
 export default function RoomCard({ room, className = "" }) {
   const accent = ACCENT_BY_TYPE[room.roomType] ?? DEFAULT_ACCENT;
-  const navigate = useNavigate();
 
   return (
-    <div
-      className={`group relative cursor-pointer overflow-hidden rounded-2xl bg-gradient-to-br ${accent} p-5 ring-1 ring-white/10 transition-transform duration-300 hover:-translate-y-1 ${className}`}
+    <Link
+      to={`/room/${room.id}`}
+      className={`group relative block cursor-pointer overflow-hidden rounded-2xl bg-gradient-to-br ${accent} p-5 ring-1 ring-white/10 transition-transform duration-300 hover:-translate-y-1 ${className}`}
     >
       <div className="mb-4 flex items-start justify-between">
         <span className="rounded-full bg-black/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-amber-300">
@@ -64,13 +64,10 @@ export default function RoomCard({ room, className = "" }) {
             ${lowestPrice(room).toFixed(2)}
           </p>
         </div>
-        <span
-          onClick={() => navigate(`/room/${room.id}`)}
-          className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        >
+        <span className="rounded-lg bg-white/10 px-3 py-1.5 text-[11px] font-bold text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           View room →
         </span>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   Star,
   Clock,
@@ -21,6 +21,7 @@ export default function MovieDetails() {
   const status = useSelector((state) => state.movie.status);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
 
   useEffect(() => {
@@ -75,7 +76,9 @@ export default function MovieDetails() {
         <div className="absolute inset-0 bg-gradient-to-r from-red-950/60 via-black/10 to-transparent" />
 
         <button
-          onClick={() => navigate(-1)}
+          onClick={() =>
+            navigate(location.key === "default" ? "/movies" : -1)
+          }
           className="absolute left-5 top-6 z-20 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-red-400/80 transition-colors hover:text-red-300 sm:left-10"
         >
           <ArrowLeft className="h-3.5 w-3.5" />

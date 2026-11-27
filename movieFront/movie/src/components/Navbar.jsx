@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Clapperboard, LogOut, Mail, Shield, CalendarDays } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logoutUser } from "../redux/userSlice";
 
 const links = [
@@ -23,7 +23,6 @@ function formatJoinedDate(dateStr) {
 
 export default function Navbar() {
   const user = useSelector((state) => state.user.user);
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -53,29 +52,28 @@ export default function Navbar() {
       `}</style>
 
       <div className="flex items-center gap-2">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-900">
-          <Clapperboard className="h-4 w-4 text-red-300" />
-        </span>
-        <span className="font-display text-xl tracking-widest text-red-500">
-          CINEMAX
-        </span>
+        <Link to="/home" className="flex items-center gap-2">
+          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-red-900">
+            <Clapperboard className="h-4 w-4 text-red-300" />
+          </span>
+          <span className="font-display text-xl tracking-widest text-red-500">
+            CINEMAX
+          </span>
+        </Link>
       </div>
 
       <nav className="hidden sm:flex items-center gap-7 text-xs font-semibold uppercase tracking-wider text-stone-300">
         {links.map((item) => {
           const isActive = location.pathname === item.path;
           return (
-            <a
+            <Link
               key={item.name}
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate(item.path);
-              }}
+              to={item.path}
+              aria-current={isActive ? "page" : undefined}
               className={`text-gray-500 ${isActive ? "text-red-600" : "hover:text-white/50"}`}
             >
               {item.name}
-            </a>
+            </Link>
           );
         })}
       </nav>
@@ -119,6 +117,19 @@ export default function Navbar() {
                 </div>
               )}
             </div>
+
+            <nav className="border-t border-white/5 px-3 py-2 sm:hidden">
+              {links.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={() => setMenuOpen(false)}
+                  className="block rounded-lg px-3 py-2 text-xs font-semibold text-stone-300 transition-colors hover:bg-white/5 hover:text-white"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
 
             <div className="p-3 pt-1">
               <button

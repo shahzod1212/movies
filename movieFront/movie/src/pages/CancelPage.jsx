@@ -1,10 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { XCircle, Home, RotateCcw, Ticket, ShieldCheck } from "lucide-react";
 
 const CancelPage = () => {
-  const navigate = useNavigate();
-
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-zinc-950 px-5 py-12 font-sans">
       <style>{`
@@ -73,13 +71,13 @@ const CancelPage = () => {
               <Ticket className="h-4 w-4" />
               Browse Showtimes
             </Link>
-            <button
-              onClick={() => navigate(-2)}
+            <Link
+              to="/showtimes"
               className="flex flex-1 items-center justify-center gap-2 rounded-full bg-gradient-to-r from-red-700 to-orange-600 px-6 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all hover:scale-[1.02]"
             >
               <RotateCcw className="h-4 w-4" />
               Try Again
-            </button>
+            </Link>
           </div>
 
           <Link

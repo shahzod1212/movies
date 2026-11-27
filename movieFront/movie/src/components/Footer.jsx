@@ -4,10 +4,8 @@ import {
   MapPin,
   Phone,
   Mail,
-  Link as LinkIcon,
-  AtSign,
-  Send,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -31,17 +29,37 @@ export default function Footer() {
               Explore
             </p>
             <ul className="mt-3 space-y-2 text-xs text-stone-500">
-              <li className="cursor-pointer transition-colors hover:text-red-500">
-                Now Showing
+              <li>
+                <Link
+                  to="/showtimes"
+                  className="transition-colors hover:text-red-500"
+                >
+                  Now Showing
+                </Link>
               </li>
-              <li className="cursor-pointer transition-colors hover:text-red-500">
-                Rooms
+              <li>
+                <Link
+                  to="/home#rooms"
+                  className="transition-colors hover:text-red-500"
+                >
+                  Rooms
+                </Link>
               </li>
-              <li className="cursor-pointer transition-colors hover:text-red-500">
-                Showtimes
+              <li>
+                <Link
+                  to="/showtimes"
+                  className="transition-colors hover:text-red-500"
+                >
+                  Showtimes
+                </Link>
               </li>
-              <li className="cursor-pointer transition-colors hover:text-red-500">
-                Browse All
+              <li>
+                <Link
+                  to="/movies"
+                  className="transition-colors hover:text-red-500"
+                >
+                  Browse All
+                </Link>
               </li>
             </ul>
           </div>
@@ -70,26 +88,7 @@ export default function Footer() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-red-400">
               Follow
             </p>
-            <div className="mt-3 flex gap-3">
-              <a
-                href="#"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 text-stone-500 ring-1 ring-red-900/40 transition-colors hover:text-red-500"
-              >
-                <LinkIcon className="h-3.5 w-3.5" />
-              </a>
-              <a
-                href="#"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 text-stone-500 ring-1 ring-red-900/40 transition-colors hover:text-red-500"
-              >
-                <AtSign className="h-3.5 w-3.5" />
-              </a>
-              <a
-                href="#"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-900 text-stone-500 ring-1 ring-red-900/40 transition-colors hover:text-red-500"
-              >
-                <Send className="h-3.5 w-3.5" />
-              </a>
-            </div>
+            <p className="mt-3 text-xs text-stone-500">Social links coming soon.</p>
           </div>
         </div>
 

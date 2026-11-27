@@ -12,7 +12,7 @@ import {
   Home,
 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const NAV_ITEMS = [
   { label: "Dashboard", icon: LayoutDashboard },
@@ -24,7 +24,6 @@ const NAV_ITEMS = [
 
 export default function AdminSidebar({ activeView, onSelect }) {
   const user = useSelector((state) => state.user.user);
-  const navigate = useNavigate();
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 flex w-64 flex-col border-r border-white/5 bg-black">
@@ -49,13 +48,13 @@ export default function AdminSidebar({ activeView, onSelect }) {
       </div>
 
       <div className="px-3 pb-2">
-        <div
-          onClick={() => navigate("/home")}
+        <Link
+          to="/home"
           className="flex cursor-pointer items-center gap-3 rounded-lg border border-white/5 bg-white/[0.03] px-3 py-2.5 text-sm font-semibold text-stone-300 transition-colors hover:bg-white/5 hover:text-stone-100"
         >
           <Home className="h-4 w-4" />
           Back to Site
-        </div>
+        </Link>
       </div>
 
       <nav className="flex-1 px-3 py-2">
@@ -85,9 +84,13 @@ export default function AdminSidebar({ activeView, onSelect }) {
       </nav>
 
       <div className="border-t border-white/5 px-3 py-4">
-        <div className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-stone-400 transition-colors hover:bg-white/5 hover:text-stone-100">
+        <div
+          title="Settings are not available yet"
+          aria-disabled="true"
+          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold text-stone-600"
+        >
           <Settings className="h-4 w-4" />
-          Settings
+          Settings (coming soon)
         </div>
 
         <div className="mt-4 flex items-center gap-3 rounded-lg bg-white/5 px-3 py-2.5">

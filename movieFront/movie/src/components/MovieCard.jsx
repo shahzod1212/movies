@@ -1,6 +1,6 @@
 import React from "react";
 import { Star, Ticket } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function formatTime(time) {
   if (!time) return "";
@@ -13,12 +13,11 @@ function formatTime(time) {
 
 export default function MovieCard({ showtime }) {
   const { movie, room, date, startTime, showtimeStatus } = showtime;
-  const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => navigate(`/showtime/${showtime.id}`)}
-      className="group relative flex-shrink-0 w-[168px] sm:w-[188px] cursor-pointer"
+    <Link
+      to={`/showtime/${showtime.id}`}
+      className="group relative block flex-shrink-0 w-[168px] sm:w-[188px] cursor-pointer"
     >
       <div className="relative aspect-[2/3] overflow-hidden rounded-xl ring-1 ring-white/10">
         <img
@@ -62,6 +61,6 @@ export default function MovieCard({ showtime }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

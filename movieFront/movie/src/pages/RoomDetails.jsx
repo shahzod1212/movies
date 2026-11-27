@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Users, Volume2, Monitor, Clapperboard, ArrowLeft } from "lucide-react";
 import { fetchRoomById } from "../redux/roomSlice";
 import { fetchSeatsByRoom } from "../redux/seatSlice";
@@ -21,6 +21,7 @@ export default function RoomDetails() {
   const roomStatus = useSelector((state) => state.room.status);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
 
   useEffect(() => {
@@ -64,7 +65,9 @@ export default function RoomDetails() {
         <div className="pointer-events-none absolute inset-0 bg-black/20" />
         <div className="relative z-10 mx-auto max-w-5xl">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() =>
+              navigate(location.key === "default" ? "/home#rooms" : -1)
+            }
             className="mb-6 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-white/70 transition-colors hover:text-white"
           >
             <ArrowLeft className="h-3.5 w-3.5" />

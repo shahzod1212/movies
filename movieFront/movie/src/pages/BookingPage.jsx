@@ -12,7 +12,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllBooking, fetchMyBookingByStatus } from "../redux/bookingSlice";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const STATUS_TABS = ["ALL", "PENDING", "CONFIRMED", "CANCELLED", "EXPIRED"];
 
@@ -127,10 +127,13 @@ function BookingCard({ booking }) {
                 </span>
               </div>
             )}
-            <button className="flex items-center justify-center gap-1.5 rounded-lg bg-red-900 px-3.5 py-2 text-[11px] font-bold text-stone-50 shadow-lg shadow-red-950/50 transition-all group-hover:-translate-y-0.5 group-hover:bg-red-800 sm:w-full">
+            <Link
+              to={`/showtime/${booking.showtimeId}`}
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-red-900 px-3.5 py-2 text-[11px] font-bold text-stone-50 shadow-lg shadow-red-950/50 transition-all group-hover:-translate-y-0.5 group-hover:bg-red-800 sm:w-full"
+            >
               <Ticket className="h-3.5 w-3.5" />
-              View ticket
-            </button>
+              View showtime
+            </Link>
           </div>
         </div>
       </div>
@@ -144,7 +147,6 @@ const BookingPage = () => {
     (state) => state.booking.filteredBookings,
   );
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [folder, setFolder] = useState("ALL");
   const [filteredOpen, setFilteredOpen] = useState(false);
 

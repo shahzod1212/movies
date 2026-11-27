@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Mail, Lock, Eye, EyeOff, Clapperboard } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchLoginUser } from "../redux/userSlice";
 
 const POSTER_URLS = [
@@ -245,12 +245,12 @@ export default function Login() {
               >
                 Password
               </label>
-              <a
-                href="#"
-                className="text-[10.5px] font-semibold text-amber-400 hover:text-amber-300"
+              <span
+                title="Password reset is not available yet"
+                className="text-[10.5px] font-semibold text-stone-600"
               >
                 Forgot password?
-              </a>
+              </span>
             </div>
             <div className="relative flex items-center">
               <Lock className="pointer-events-none absolute left-3 h-4 w-4 text-stone-500" />
@@ -289,9 +289,12 @@ export default function Login() {
 
         <p className="mt-4 text-center text-xs text-stone-400">
           New here?{" "}
-          <a href="#" className="font-bold text-amber-400 hover:text-amber-300">
+          <Link
+            to="/signup"
+            className="font-bold text-amber-400 hover:text-amber-300"
+          >
             Create an account
-          </a>
+          </Link>
         </p>
       </div>
     </div>
