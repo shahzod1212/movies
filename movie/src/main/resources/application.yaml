@@ -28,6 +28,13 @@ spring:
           starttls:
             enable: true
 
+server:
+  port: ${PORT:8080}
+
+app:
+  cors:
+    allowed-origin: ${FRONTEND_URL:http://localhost:5173}
+
 jwt:
   secretKey: ${JWT_SECRET}
   expirationAccessToken: 7200000
@@ -38,5 +45,5 @@ inbox:
 
 stripe:
   secret-key: ${STRIPE_SECRET_KEY}
-  success-url: "http://localhost:5173/booking/success"
-  cancel-url: "http://localhost:5173/booking/cancel"
+  success-url: "${STRIPE_SUCCESS_URL:http://localhost:5173/booking/success}"
+  cancel-url: "${STRIPE_CANCEL_URL:http://localhost:5173/booking/cancel}"

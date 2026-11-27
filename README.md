@@ -113,7 +113,21 @@ npm run dev
 
 Vite prints the local frontend URL when it starts (normally `http://localhost:5173`). Open that URL and use **Sign up** or **Log in** to access the application.
 
-> The frontend API URL, allowed CORS origin, and Stripe return URLs are currently configured for local development (`localhost`). Update those settings before deploying to another environment.
+## Cloud deployment direction
+
+The recommended hosting layout is the Vite frontend on Vercel, with the Spring Boot service and managed MySQL database on Railway. The app can also use Vercel's beta Container Runtime and Services, but the existing Compose file is for local development and is not deployed directly.
+
+For Vercel, set the project root to `movieFront/movie`, use `npm run build`, and set the output directory to `dist`. Configure `VITE_API_URL` to the public Railway backend URL.
+
+For the Railway backend service, use `movie` as its root directory and the included `Dockerfile`. Add a Railway MySQL service and set the backend variables listed below, plus:
+
+- `FRONTEND_URL` to the exact Vercel site origin (for example, `https://your-site.vercel.app`)
+- `STRIPE_SUCCESS_URL` to the Vercel site's `/booking/success` URL
+- `STRIPE_CANCEL_URL` to the Vercel site's `/booking/cancel` URL
+
+The backend reads Railway's `PORT` variable. The local defaults remain `8080` and `http://localhost:5173`. Configure production secrets in the hosting providers' environment settings, not in Git.
+
+The local MySQL database must be exported and imported into the hosted database; it is not copied by deployment. Back it up first and migrate only the movie catalogue and related cinema setup unless you explicitly intend to move customer or booking data too. Set up managed database backups before relying on the live service.
 
 ## Configuration reference
 
@@ -127,6 +141,11 @@ Vite prints the local frontend URL when it starts (normally `http://localhost:51
 | `MAIL_PASSWORD` | SMTP account password/app password | Required |
 | `INBOX_EMAIL` | Recipient for support messages | Required |
 | `STRIPE_SECRET_KEY` | Stripe API secret key | Required |
+| `STRIPE_SUCCESS_URL` | Payment success redirect | `http://localhost:5173/booking/success` |
+| `STRIPE_CANCEL_URL` | Payment cancel redirect | `http://localhost:5173/booking/cancel` |
+| `FRONTEND_URL` | Allowed browser origin for CORS | `http://localhost:5173` |
+| `PORT` | Backend HTTP port | `8080` |
+| `VITE_API_URL` | Backend base URL compiled into the frontend | `http://localhost:8080` |
 
 The application configures Gmail SMTP on port `587`. Do not commit real passwords, API keys, or JWT secrets; use environment variables or a local secrets manager.
 
@@ -144,7 +163,7 @@ The application configures Gmail SMTP on port `587`. Do not commit real password
 | `/bookings` | View your bookings |
 | `/admin` | Admin dashboard and catalogue/schedule management (ADMIN role required) |
 
-Most customer pages require authentication. The backend API is served on port `8080`; the frontend currently uses that address directly.
+Most customer pages require authentication. The frontend defaults to the local backend at `http://localhost:8080`; production builds can set `VITE_API_URL` to the hosted API.
 
 ## Development commands
 

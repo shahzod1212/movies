@@ -3,6 +3,7 @@ package com.movie.movie.config;
 import com.movie.movie.jwt.JwtFilters;
 import com.movie.movie.service.UserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -28,6 +29,9 @@ import java.util.List;
 public class SecurityWebConfig {
     private final UserDetailsService userDetailsService;
     private final JwtFilters jwtFilters;
+
+    @Value("${app.cors.allowed-origin}")
+    private String allowedOrigin;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -69,7 +73,7 @@ public class SecurityWebConfig {
         CorsConfiguration source = new CorsConfiguration();
         source.setAllowCredentials(true);
         source.setAllowedMethods(List.of("GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS"));
-        source.setAllowedOrigins(List.of("http://localhost:5173"));
+        source.setAllowedOrigins(List.of(allowedOrigin));
         source.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         UrlBasedCorsConfigurationSource url = new UrlBasedCorsConfigurationSource();
         url.registerCorsConfiguration("/**", source);

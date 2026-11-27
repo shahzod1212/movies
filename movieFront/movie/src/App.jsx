@@ -1,7 +1,7 @@
 import React from "react";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import { Toaster } from "sonner";
 import useHydration from "./hooks/useHydration";
@@ -23,6 +23,7 @@ const App = () => {
     <div>
       <Toaster richColors position="top-right" />
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
 
